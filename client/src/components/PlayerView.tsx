@@ -400,9 +400,7 @@ export default function PlayerView() {
           </div>
         )}
 
-        <div className="my-score">
-          #{myRank} — {myScore} pts
-        </div>
+        <Leaderboard scores={scores} myName={myName} />
 
         {drinkPrompt && <div className="drink-prompt big">{drinkPrompt}</div>}
 
