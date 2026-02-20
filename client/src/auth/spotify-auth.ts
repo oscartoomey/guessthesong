@@ -11,7 +11,10 @@ import {
 import type { SpotifyTokenResponse } from '../types/spotify';
 
 const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
-const REDIRECT_URI = window.location.origin;
+// Spotify only allows http:// redirect URIs for localhost.
+// Always redirect to localhost so OAuth works even when the page is
+// loaded via a LAN IP — the host machine is always localhost.
+const REDIRECT_URI = `http://localhost:${window.location.port}`;
 const SCOPES = [
   'playlist-read-private',
   'playlist-read-collaborative',
