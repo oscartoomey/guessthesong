@@ -23,10 +23,10 @@ async function spotifyFetchWithRetry<T>(
     return spotifyFetchWithRetry<T>(endpoint, options, attempt + 1);
   }
 
-  if (response.status === 429 && attempt < 5) {
+  if (response.status === 429 && attempt < 2) {
     const retryAfter = parseInt(response.headers.get('Retry-After') || '0', 10);
-    const backoff = Math.max(retryAfter || 5, 3 * 2 ** attempt);
-    console.warn(`Rate limited — retrying in ${backoff}s (attempt ${attempt + 1})`);
+    const backoff = Math.max(retryAfter, 30);
+    console.warn(`Rate limited — retrying in ${backoff}s`);
     await new Promise((r) => setTimeout(r, backoff * 1000));
     return spotifyFetchWithRetry<T>(endpoint, options, attempt + 1);
   }
