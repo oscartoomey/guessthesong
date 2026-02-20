@@ -18,7 +18,7 @@ async function spotifyFetchWithRetry<T>(
     },
   });
 
-  if (response.status === 401 && attempt === 0) {
+  if ((response.status === 401 || response.status === 403) && attempt === 0) {
     await forceRefreshToken();
     return spotifyFetchWithRetry<T>(endpoint, options, attempt + 1);
   }
@@ -62,7 +62,7 @@ export async function spotifyPut(
     body: body ? JSON.stringify(body) : undefined,
   });
 
-  if (response.status === 401) {
+  if (response.status === 401 || response.status === 403) {
     // Token revoked or invalid — force refresh and retry once
     const freshToken = await forceRefreshToken();
     const retry = await fetch(`${BASE_URL}${endpoint}`, {
