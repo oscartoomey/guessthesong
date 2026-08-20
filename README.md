@@ -1,6 +1,6 @@
-# Guess the Song - Drinking Game
+# Guess the Song
 
-A Spotify-based local multiplayer drinking game.
+A Spotify-based local multiplayer game.
 
 ## Prerequisites
 
